@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViewMore</title>
+    <style>
+           /* CSS Variables for Consistent Theme */
+        :root {
+            --bg-color: #060913;
+            --card-bg: #10141f;
+            --accent-red: #ff002b;
+            --text-main: #ffffff;
+            --text-muted: #8b92a5;
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+        }
+
+        /* Basic Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+ 
+          /* === PLATFORMS === */
+        .platforms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 40px 5%;
+            background: #080b14;
+        }
+        .platform-card {
+            background: var(--card-bg);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s;
+        }
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255,0,43,0.2);
+        }
+        .platform-card i { font-size: 30px; }
+        .platform-info h3 { font-family: var(--font-heading); font-size: 20px; }
+        .platform-info p { color: var(--accent-red); font-size: 12px; font-weight: bold; }
+
+        /* === GAMES GRID === */
+        .games-section { padding: 40px 5%; }
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+            position: relative;
+        }
+        .game-card:hover { transform: scale(1.03); }
+        .game-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            /* IMAGE PLACEHOLDER: GAME CARD IMAGES */
+            background-color: #222; 
+        }
+        .game-info { padding: 20px; }
+        .game-info h3 { font-family: var(--font-heading); font-size: 22px; margin-bottom: 10px; text-transform: uppercase; }
+        .game-info p { color: var(--text-muted); font-size: 13px; margin-bottom: 15px; }
+        .free-tag { color: var(--accent-red); font-weight: bold; font-family: var(--font-heading); letter-spacing: 1px; }
+
+        /* ALL GAMES BUTTON */
+        .all-games-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 50px 0;
+            position: relative;
+        }
+        .all-games-wrapper::before {
+            content: ''; position: absolute; width: 100%; height: 1px; background: #222; z-index: -1;
+        }
+        .btn-all-games {
+            background: var(--bg-color);
+            border: 1px solid #333;
+            color: #fff;
+            padding: 10px 30px;
+            font-family: var(--font-heading);
+            font-size: 16px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-all-games:hover { border-color: var(--accent-red); color: var(--accent-red); }
+
+        /* === GIVEAWAY SECTION === */
+        .giveaways {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 5% 50px;
+        }
+        .giveaway-card {
+            position: relative;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 30px;
+            /* IMAGE PLACEHOLDER: GIVEAWAY BACKGROUNDS */
+            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.2)), #1a1025;
+            background-size: cover;
+            transition: 0.3s;
+        }
+        .giveaway-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .giveaway-info { max-width: 60%; }
+        .giveaway-info h3 { font-family: var(--font-heading); font-size: 24px; margin-bottom: 10px; }
+        .giveaway-info p { color: var(--text-muted); font-size: 12px; line-height: 1.5; }
+
+        /* === CUSTOM SUBMIT FORM SECTION === */
+        .contact-section {
+            padding: 60px 5%;
+            background: #0a0e1a;
+            border-top: 2px solid var(--accent-red);
+        }
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .contact-container h2 {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--accent-red);
+        }
+        .contact-container p { color: var(--text-muted); margin-bottom: 30px; font-size: 14px; }
+        .custom-form { display: flex; flex-direction: column; gap: 20px; }
+        
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: #060913;
+            border: 1px solid #2a3143;
+            color: #fff;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            transition: border 0.3s;
+        }
+        .input-group input:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-red);
+        }
+        .input-group textarea { resize: vertical; min-height: 120px; }
+        
+        .btn-submit {
+            background: var(--accent-red);
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-submit:hover { background: #d40024; transform: scale(1.02); }
+    </style>
+</head>
+<body>
+    <section class="platforms" id="aboutt">
+            <div class="platform-card">
+                <i class="fab fa-windows"></i>
+                <div class="platform-info">
+                    <h3>✅ Hindi
+
+शुभ सिक्योरिटी सर्विस के बारे में
+शुभ सिक्योरिटी सर्विस एक विश्वसनीय और प्रोफेशनल सुरक्षा सेवा प्रदाता है।
+हम लोगों, संपत्ति और व्यवसाय की सुरक्षा के लिए समर्पित हैं।
+हमारी टीम प्रशिक्षित, अनुशासित और सत्यापित है।
+हम ईमानदारी, जिम्मेदारी और 24/7 सुरक्षा में विश्वास रखते हैं।</h3>
+                    <a href="index.html"><p>VIEW MORE</p></a>
+                </div>
+            </div>
+            <div class="platform-card">
+                <i class="fas fa-mobile-alt"></i>
+                <div class="platform-info">
+                    <h3>✅ Hindi
+
+हमारा मिशन
+हमारा उद्देश्य हर स्थान पर सुरक्षित वातावरण प्रदान करना है।
+हम भरोसेमंद और किफायती सुरक्षा समाधान देने का लक्ष्य रखते हैं।
+ग्राहकों का विश्वास और संतुष्टि हमारी प्राथमिकता है।
+हम हर जगह सुरक्षा मानकों को बनाए रखने के लिए प्रतिबद्ध हैं।</h3>
+                    <a href="index.html"><p>VIEW MORE</p></a>
+                </div>
+            </div>
+            <div class="platform-card">
+                <i class="fab fa-xbox"></i>
+                <div class="platform-info">
+                    <h3>✅ Hindi
+
+हमारी सेवाएं
+हम स्कूल, अस्पताल, फैक्ट्री और कार्यालयों के लिए सुरक्षा गार्ड उपलब्ध कराते हैं।
+आवश्यकता अनुसार हथियारबंद और बिना हथियार वाले गार्ड उपलब्ध हैं।
+हम इवेंट सुरक्षा और VIP सुरक्षा सेवा भी प्रदान करते हैं।
+24/7 तैनाती और आपातकालीन सहायता उपलब्ध है।</h3>
+                   <a href="index.html"><p>VIEW MORE</p></a>
+                </div>
+            </div>
+            <div class="platform-card">
+                <i class="fab fa-playstation"></i>
+                <div class="platform-info">
+                    <h3>✅ Hindi
+
+हमें क्यों चुनें
+सत्यापित और प्रशिक्षित सुरक्षा स्टाफ।
+तेज प्रतिक्रिया और भरोसेमंद सेवा।
+पारदर्शी प्रक्रिया और प्रोफेशनल प्रबंधन।
+आपकी महत्वपूर्ण चीजों की सुरक्षा के लिए समर्पित।</h3>
+                    <a href="index.html"><p>VIEW MORE</p></a>
+                </div>
+            </div>
+        </section>
+        <section class="games-section" id="servicesss">
+            <div class="games-grid">
+                <div class="game-card">
+                    <img src="VIEWMOREWEIMAGE (6).png" alt="School" class="game-img">
+                    <div class="game-info">
+                        <h3>" SCHOOL "</h3>
+                        
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="VIEWMOREWEIMAGE (5).png" alt="Hospitals" class="game-img">
+                    <div class="game-info">
+                        
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="VIEWMOREWEIMAGE (4).png" alt="FACTORY" class="game-img">
+                    <div class="game-info">
+                       
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="VIEWMOREWEIMAGE (2).png" alt="MALLS" class="game-img">
+                    <div class="game-info">
+                        
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <img src="VIEWMOREWEIMAGE (5).png" alt="VIP PROTECTION" class="game-img">
+                    <div class="game-info">
+                       
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="VIEWMOREWEIMAGE (1).png" alt="COMPUTER SECURITY" class="game-img">
+                    <div class="game-info">
+                        
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="VIEWMOREWEIMAGE (4).png" alt="Gloria Soccer" class="game-img">
+                    <div class="game-info">
+                       
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="VIEWMOREWEIMAGE (3).png" alt="MORE SECURITY IS AVAILABLE" class="game-img">
+                    <div class="game-info">
+                        
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+            </div>
+
+</body>
+</html>

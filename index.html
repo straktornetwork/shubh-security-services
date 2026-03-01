@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shubhsecurity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS Variables for Consistent Theme */
+        :root {
+            --bg-color: #060913;
+            --card-bg: #10141f;
+            --accent-red: #ff002b;
+            --text-main: #ffffff;
+            --text-muted: #8b92a5;
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+        }
+
+        /* Basic Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 5px var(--accent-red); }
+            50% { box-shadow: 0 0 20px var(--accent-red); }
+            100% { box-shadow: 0 0 5px var(--accent-red); }
+        }
+
+        /* === TOPBAR === */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 5%;
+            background: #03050a;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .topbar-icons i { margin: 0 5px; cursor: pointer; transition: color 0.3s;}
+        .topbar-icons i:hover { color: var(--text-main); }
+
+        /* === NAVBAR === */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 5%;
+            background: rgba(6, 9, 19, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #1a1f2e;
+        }
+        .nav-left { display: flex; align-items: center; gap: 30px; }
+        .hamburger { display: none; font-size: 24px; cursor: pointer; color: var(--accent-red); }
+        .nav-links { display: flex; gap: 20px; font-family: var(--font-heading); font-size: 16px; font-weight: 500;}
+        .nav-links a:hover { color: var(--accent-red); transition: 0.3s; }
+        .active-link { color: var(--accent-red); }
+        
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+        .btn-download {
+            background: var(--accent-red);
+            color: #fff;
+            padding: 10px 20px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+            animation: pulseGlow 2s infinite;
+        }
+        .btn-download:hover { transform: scale(1.05); }
+
+        /* === HERO SECTION === */
+        .hero {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            /* IMAGE PLACEHOLDER: HERO BACKGROUND IMAGE */
+            /* Apni image ka link url() ke andar daalein */
+            background: linear-gradient(to right, #060913 20%, rgba(6,9,19,0.3) 100%), 
+                        url('kalilinuxos.jpg') center/cover;
+            animation: fadeIn 1s ease-out;
+        }
+        .hero-content {
+            max-width: 500px;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .hero p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .store-btns { display: flex; gap: 15px; flex-wrap: wrap; }
+        .store-btn {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .store-btn:hover { border-color: var(--accent-red); }
+
+        /* === PLATFORMS === */
+        .platforms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 40px 5%;
+            background: #080b14;
+        }
+        .platform-card {
+            background: var(--card-bg);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s;
+        }
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255,0,43,0.2);
+        }
+        .platform-card i { font-size: 30px; }
+        .platform-info h3 { font-family: var(--font-heading); font-size: 20px; }
+        .platform-info p { color: var(--accent-red); font-size: 12px; font-weight: bold; }
+
+        /* === GAMES GRID === */
+        .games-section { padding: 40px 5%; }
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+            position: relative;
+        }
+        .game-card:hover { transform: scale(1.03); }
+        .game-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            /* IMAGE PLACEHOLDER: GAME CARD IMAGES */
+            background-color: #222; 
+        }
+        .game-info { padding: 20px; }
+        .game-info h3 { font-family: var(--font-heading); font-size: 22px; margin-bottom: 10px; text-transform: uppercase; }
+        .game-info p { color: var(--text-muted); font-size: 13px; margin-bottom: 15px; }
+        .free-tag { color: var(--accent-red); font-weight: bold; font-family: var(--font-heading); letter-spacing: 1px; }
+
+        /* ALL GAMES BUTTON */
+        .all-games-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 50px 0;
+            position: relative;
+        }
+        .all-games-wrapper::before {
+            content: ''; position: absolute; width: 100%; height: 1px; background: #222; z-index: -1;
+        }
+        .btn-all-games {
+            background: var(--bg-color);
+            border: 1px solid #333;
+            color: #fff;
+            padding: 10px 30px;
+            font-family: var(--font-heading);
+            font-size: 16px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-all-games:hover { border-color: var(--accent-red); color: var(--accent-red); }
+
+        /* === GIVEAWAY SECTION === */
+        .giveaways {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 5% 50px;
+        }
+        .giveaway-card {
+            position: relative;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 30px;
+            /* IMAGE PLACEHOLDER: GIVEAWAY BACKGROUNDS */
+            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.2)), #1a1025;
+            background-size: cover;
+            transition: 0.3s;
+        }
+        .giveaway-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .giveaway-info { max-width: 60%; }
+        .giveaway-info h3 { font-family: var(--font-heading); font-size: 24px; margin-bottom: 10px; }
+        .giveaway-info p { color: var(--text-muted); font-size: 12px; line-height: 1.5; }
+
+        /* === CUSTOM SUBMIT FORM SECTION === */
+        .contact-section {
+            padding: 60px 5%;
+            background: #0a0e1a;
+            border-top: 2px solid var(--accent-red);
+        }
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .contact-container h2 {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--accent-red);
+        }
+        .contact-container p { color: var(--text-muted); margin-bottom: 30px; font-size: 14px; }
+        .custom-form { display: flex; flex-direction: column; gap: 20px; }
+        
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: #060913;
+            border: 1px solid #2a3143;
+            color: #fff;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            transition: border 0.3s;
+        }
+        .input-group input:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-red);
+        }
+        .input-group textarea { resize: vertical; min-height: 120px; }
+        
+        .btn-submit {
+            background: var(--accent-red);
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-submit:hover { background: #d40024; transform: scale(1.02); }
+
+        /* === RESPONSIVE DESIGN (MOBILE FOCUS) === */
+        @media (max-width: 768px) {
+            .topbar { display: none; } /* Hide topbar on mobile to save space */
+            
+            .hamburger { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(6, 9, 19, 0.98);
+                width: 100%;
+                text-align: center;
+                padding: 20px 0;
+                transition: 0.4s ease;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            }
+            .nav-links.active { left: 0; }
+            
+            .hero h1 { font-size: 2.5rem; }
+            .hero { min-height: 60vh; text-align: center; justify-content: center; }
+            .store-btns { justify-content: center; }
+            
+            .giveaway-card { padding: 20px; justify-content: center; text-align: center; }
+            .giveaway-info { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <div class="topbar-icons">
+            <span>follow us on </span>
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-youtube"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-twitch"></i>
+        </div>
+        <div class="topbar-email">
+            <i class="fas fa-envelope"></i> shubhsecurity@gmail.com
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <i class="fas fa-bars hamburger" id="menuBtn"></i>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="active-link">Home</a></li>
+                <li><a href="#aboutt">About</a></li>
+                <li><a href="#servicesss">Services</a></li>
+                <li><a href="#">Projects</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <a href="https://www.instagram.com/shubhsecurity/"><i class="fas fa-user-circle"></i> Join Now</a>
+            <a href="#contact"><button class="btn-download">Registration</button></a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+               <h1>⚠️🔐 
+      <span style="color: red; text-decoration: underline;">
+          SHUBH SECURITY
+            </span> 
+          Service
+       </h1>
+                <h4><B>Trusted Security Guards for Schools, Malls, Factories, Hospitals & VIP Protection.</B></h4>
+        <hr>
+          <hr>
+        <br> 
+                <div class="store-btns">
+                    <div class="store-btn">
+                        <i class="fab fa-google-play fa-2x"></i>
+                        <div><small>Contact no.</small><br><strong>Contact no.</strong></div>
+                    </div>
+                    <div class="store-btn">
+                        <i class="fab fa-apple fa-2x"></i>
+                        <div><small><b>8174825493</b></small><br><strong><b>8601109149</b></strong></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="platforms" id="aboutt">
+            <div class="platform-card">
+                <i class="fab fa-windows"></i>
+                <div class="platform-info">
+                    <h3>About Shubh Security Service
+Shubh Security Service is a trusted and professional security provider.
+We are committed to protecting people, property, and businesses with dedication.
+Our team is trained, disciplined, and background verified.
+We believe in honesty, responsibility, and round-the-clock protection.</h3>
+                 <a href="viewmore.html"><p>VIEW MORE</p></a>
+                </div>
+            </div>
+            <div class="platform-card">
+                <i class="fas fa-mobile-alt"></i>
+                <div class="platform-info">
+                    <h3>Our Mission
+Our mission is to provide safe and secure environments everywhere.
+We aim to deliver reliable and affordable security solutions.
+Customer satisfaction and trust are our top priorities.
+We work hard to maintain safety standards at every location.</h3>
+                    <a href="viewmore.html"><p>VIEW MORE</p></a>
+                </div>
+            </div>
+            <div class="platform-card">
+                <i class="fab fa-xbox"></i>
+                <div class="platform-info">
+                    <h3>Our Services
+We provide security guards for schools, hospitals, factories, and offices.
+Both armed and unarmed guards are available as per requirement.
+We also offer event security and VIP protection services.
+24 hours deployment and emergency response support available.</h3>
+                   <a href="viewmore.html"><p>VIEW MORE</p></a>
+                </div>
+            </div>
+            <div class="platform-card">
+                <i class="fab fa-playstation"></i>
+                <div class="platform-info">
+                    <h3>Why Choose Us
+Verified and trained security staff.
+Quick response and reliable service.
+Transparent process and professional management.
+Dedicated to protecting what matters most.</h3>
+                   <a href="viewmore.html"><p>VIEW MORE</p></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="games-section" id="servicesss">
+            <div class="games-grid">
+                <div class="game-card">
+                    <img src="rrschoolsecurity.jpg" alt="School" class="game-img">
+                    <div class="game-info">
+                        <h3>" SCHOOL "</h3>
+                        <p>Trained guards ensuring student and staff safety.
+Strict entry monitoring and visitor verification.
+Safe and disciplined campus environment.</p>
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="hospitalsec.jpg" alt="Hospitals" class="game-img">
+                    <div class="game-info">
+                        <h3>" Hospitals "</h3>
+                        <p>24 hours security for patients, doctors, and staff.
+Emergency response ready guards.
+Controlled access to sensitive areas.</p>
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="factorysecurity.jpg" alt="FACTORY" class="game-img">
+                    <div class="game-info">
+                        <h3>" FACTORY "</h3>
+                        <p>Protection of assets, machinery, and workers.
+Shift-based security monitoring.
+Prevention of theft and unauthorized access.</p>
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="mallsecurity.jpg" alt="MALLS" class="game-img">
+                    <div class="game-info">
+                        <h3>" MALLS "</h3>
+                        <p>Crowd management and public safety.
+CCTV monitoring and entry control.
+Safe shopping experience for customers.</p>
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <img src="planesecurity.jpg" alt="VIP PROTECTION" class="game-img">
+                    <div class="game-info">
+                        <h3>" VIP PROTECTION "</h3>
+                        <p>Professional personal security officers.
+Close protection with strict confidentiality.
+Safe travel and event security support.</p>
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="teckcfd.jpg" alt="COMPUTER SECURITY" class="game-img">
+                    <div class="game-info">
+                        <h3>" COMPUTER SECURITY "</h3>
+                        <p>Monitoring and protection of digital systems.
+Prevention of cyber threats and data misuse.
+Secure IT environment for businesses.</p>
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="tecksecurity.jpg" alt="Gloria Soccer" class="game-img">
+                    <div class="game-info">
+                        <h3>" VIP GUEST & CELEBRITY PROTECTION "</h3>
+                        <p>High-level protection for guests and celebrities.
+Discreet and disciplined security staff.
+Event and travel security management.</p>
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="allsecurity.jpg" alt="MORE SECURITY IS AVAILABLE" class="game-img">
+                    <div class="game-info">
+                        <h3>" MORE SECURITY IS AVAILABLE "</h3>
+                        <p>Customized security solutions as per requirement.
+Temporary and long-term deployment options.
+Contact us for complete security support.</p>
+                        <span class="free-tag">AVAILABLE</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="all-games-wrapper">
+                <button class="btn-all-games">ALL SERVICE</button>
+            </div>
+        </section>
+
+        <section class="giveaways">
+            <div class="giveaway-card">
+                <div class="giveaway-info">
+                    <span style="color: rgb(0, 255, 0); text-decoration: underline;">
+          <h3>SECURITY GUARD JOB OPENINGS 🛡️ </h3>
+            </span>
+                  <b><p>We are hiring trained and dedicated security guards for various locations.
+Opportunities are available for schools, hospitals, factories, and corporate offices.
+Both experienced and fresh candidates can apply.
+Attractive salary, fixed shifts, and proper verification process included.
+Apply now and build a secure and stable career with us.</p></b><hr>
+                </div>
+            </div>
+            <div class="giveaway-card">
+                <div class="giveaway-info">
+            <span style="color: rgb(0, 255, 0); text-decoration: underline;">
+                 <h3>PROFESSIONAL SECURITY SERVICES AVAILABLE 🚀</h3>
+                </span>        
+                    <b><p>We provide reliable and verified security guards for companies and institutions.
+Our services are available for factories, schools, hospitals, malls, and guest houses.
+Both armed and unarmed guards can be deployed as per requirement.
+24/7 security support with trained and disciplined staff.
+Contact us today to protect your property and people.</p></b><hr>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section" id="contact">
+            <div class="contact-container">
+                <h2> REGISTRATION / CONTACT🎮</h2>
+                <p>Fill out your details below to subscribe, drop notes, or register for our community drops! 👾✨</p>
+                
+                <form class="custom-form" id="gamingForm">
+                    <div class="input-group">
+                        <input type="text" id="userName" placeholder="👤 Player Name (Full Name)" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="userEmail" placeholder="✉️ Gmail Address (@gmail.com)" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" id="userPhone" placeholder="📱 Phone / WhatsApp Number" required>
+                    </div>
+                    <div class="input-group">
+                        <textarea id="userNotes" placeholder="📝 Drop your notes, feedback, or secret cheat codes here..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">SUBMIT DETAILS 🔥</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Hamburger Menu Logic for Mobile Responsiveness
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            if(navLinks.classList.contains('active')){
+                menuBtn.classList.remove('fa-bars');
+                menuBtn.classList.add('fa-times');
+            } else {
+                menuBtn.classList.remove('fa-times');
+                menuBtn.classList.add('fa-bars');
+            }
+        });
+
+        // Form Submit Logic
+        const gamingForm = document.getElementById('gamingForm');
+        
+        gamingForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevents page reload
+            
+            // Get values
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            
+            // Validation simple check
+            if(!email.includes('@gmail.com')) {
+                alert('⚠️ Please use a valid Gmail address!');
+                return;
+            }
+
+            // Success Animation/Alert (Sticker/Emoji vibe)
+            alert(`🎉 Awesome ${name}! \n\nYour details have been submitted successfully. Welcome to the squad! 🚀🎮`);
+            
+            // Reset form
+            gamingForm.reset();
+        });
+    </script>
+</body>
+</html>
